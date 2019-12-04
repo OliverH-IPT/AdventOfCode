@@ -7,6 +7,8 @@ class Point:
         self.y = y
         self.distance = abs(x)+abs(y)
 
+
+
     def toString(self):
         return "("+str(self.x)+","+str(self.y)+")"
 
@@ -27,6 +29,8 @@ class LineSegment:
 
         self.minY = min([p1.y, p2.y])
         self.maxY = max([p1.y, p2.y])
+
+        self.length = maxX-minX + maxY-minY
 
     def intersects(self, other):
         # parallels don't intersect
@@ -126,6 +130,16 @@ def getNearestIntersection(wires):
     intersections.sort(key=operator.attrgetter('distance'))
     print("Found", len(intersections), "intersections")
     return intersections[0]
+
+def getIntersectionsAndDistance(lsList1, lsList2):
+    res = []
+    for ls in lsList1:
+        for ls2 in lsList2:
+
+            intersects, intersection = ls.intersects(ls2)
+            if intersects == True:
+                res.append(intersection)
+    return res
 
 def getFirstIntersection(wires):
     lslist1, lslist2 = dissassembleBothWires(wires)
