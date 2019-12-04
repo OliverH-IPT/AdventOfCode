@@ -1,6 +1,6 @@
 # day 1
 import os
-from misc.FileHandler import getFileContentByLineAsDbl
+from misc.FileHandler import getFileContentByLine, convertToFloatMap
 
 from day1.day1 import getFuelRequirements
 from day1.day1 import calculateModuleFuelRequirement
@@ -11,7 +11,7 @@ def Day1_f():
     fileDir = os.path.dirname(__file__)
     relativePath = "../input/day1/input.txt"
     absFilePath = os.path.join(fileDir, relativePath)
-    inputMasses = getFileContentByLineAsDbl(absFilePath)
+    inputMasses = convertToFloatMap(getFileContentByLine(absFilePath))
 
     requiredFuel = getFuelRequirements(inputMasses, calculateModuleFuelRequirement)
     print("Required Fuel:", requiredFuel)
@@ -26,14 +26,14 @@ def Day1_f():
 
 # day 2
 import copy
-from misc.FileHandler import getFileContentByCommaSeperation
+from misc.FileHandler import getFileContentByCommaSeperation, convertToNumberList
 from day2.day2 import executeIntCode
 from day2.day2 import findNounAndVerb, executeIntCodeCopy
 def Day2_f():
     fileDir = os.path.dirname(__file__)
     relativePath = "../input/day2/input.txt"
     absFilePath = os.path.join(fileDir, relativePath)
-    intcodeProgram = getFileContentByCommaSeperation(absFilePath)
+    intcodeProgram = convertToNumberList(getFileContentByCommaSeperation(absFilePath))
     
     # part 1
     print("-------- Part 1 -----------")
@@ -47,7 +47,24 @@ def Day2_f():
     # part 2
     print("-------- Part 2 -----------")
     noun, verb = findNounAndVerb(intcodeProgram)
-    print("noun = ", noun, "verb = ", verb, "result in output = ", executeIntCodeCopy(intcodeProgram, noun, verb))
+    print("noun = ", noun, ", verb = ", verb, ", result in output = ", executeIntCodeCopy(intcodeProgram, noun, verb))
     print("Result = ", 100 * noun + verb)
 
-Day2_f()
+#Day2_f()
+
+# day 3
+from day3.day3 import getNearestIntersection
+def Day3_f():
+    fileDir = os.path.dirname(__file__)
+    relativePath = "../input/day3/input.txt"
+    absFilePath = os.path.join(fileDir, relativePath)
+
+    wires = []
+    for wire in getFileContentByLine(absFilePath):
+        wires.append(wire.split(','))
+
+    point = getNearestIntersection(wires)
+
+    print("Nearest intersection is at", point.toString(), " having a distance of", point.distance)
+
+Day3_f()
