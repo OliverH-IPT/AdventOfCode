@@ -1,6 +1,6 @@
 # day 1
 import os, copy
-from misc.FileHandler import getFileContentByLine, convertToFloatMap
+from days.misc.FileHandler import getFileContentByLine, convertToFloatMap
 
 from days.day1 import getFuelRequirements
 from days.day1 import calculateModuleFuelRequirement
@@ -21,10 +21,10 @@ def Day1_f():
     requiredFuel2 = getFuelRequirements(inputMasses, calculateModuleFuelRequirementRecursively)
     print("Required Fuel (recursive):", requiredFuel2)
 
-Day1_f()
+#Day1_f()
 
 # day 2
-from misc.FileHandler import getFileContentByCommaSeperation, convertToNumberList
+from days.misc.FileHandler import getFileContentByCommaSeperation, convertToNumberList
 from days.day2 import executeIntCode
 from days.day2 import findNounAndVerb, executeIntCodeCopy
 def Day2_f():
@@ -48,7 +48,7 @@ def Day2_f():
     print("noun = ", noun, ", verb = ", verb, ", result in output = ", executeIntCodeCopy(intcodeProgram, noun, verb))
     print("Result = ", 100 * noun + verb)
 
-#Day2_f()
+# Day2_f()
 
 # day 3
 from days.day3 import getNearestIntersection, getMinimumSignalDistance
@@ -79,4 +79,24 @@ def Day4_f():
     #part 2
     pwCount2 = getNumberOfPasswords(checkPassword_part2)
     print("Total amount of possible passwords for part 2 is", pwCount2)
-#Day4_f()
+# Day4_f()
+
+from days.day2 import executeUnchangedIntCode
+def Day5_f():
+    fileDir = os.path.dirname(__file__)
+    relativePath = "../input/day5/input.txt"
+    absFilePath = os.path.join(fileDir, relativePath)
+    intcodeProgram = convertToNumberList(getFileContentByCommaSeperation(absFilePath))
+    # part 1
+    
+    print("-------- Part 1 -----------")
+    intcodeProgramCopy = copy.deepcopy(intcodeProgram)
+    if executeUnchangedIntCode(intcodeProgramCopy) == True:
+        print("Successfully ran diagnostic intcode program")
+    else:
+        print("Error while running diagnostic intcode program")
+
+    #part 2
+    
+    #print("Total amount of possible passwords for part 2 is", pwCount2)
+Day5_f()

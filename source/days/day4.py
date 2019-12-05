@@ -3,9 +3,6 @@
 def getInputRange():
     return 145852, 616942
 
-def getDigitList(num):
-    return list(map(int,str(num)))
-
 def hasOneEqualAdjacent(digitList):
     iterDigitList = iter(digitList)
     d1 = next(iterDigitList)
@@ -31,17 +28,15 @@ def checkPassword(digitList):
 
     return oneEqual, -1
 
-
+from days.misc.DigitHelper import convertDigitListToInt
 def getNextPossibleNumber(digitList, failedDigitIndex):
     pivotDigit = digitList[failedDigitIndex]
     for i in range(failedDigitIndex+1, len(digitList)):
         digitList[i] = pivotDigit
     
-    # Converting integer list to integer...
-    stringList = [str(i) for i in digitList] 
-    return int("".join(stringList)) 
+    return convertDigitListToInt(digitList)
 
-
+from days.misc.DigitHelper import getDigitList
 def getNumberOfPasswords(passwordChecker):
     min, max = getInputRange()
 
@@ -70,20 +65,19 @@ def checkPassword_part2(digitList):
     failedDigitIndex = 0
     numEquals = 0
     for d2 in iterDigitList:
-        if d1 == d2:
+        if d1 > d2: # violated increment rule
+            return False, failedDigitIndex   
+        elif d1 == d2: # equal digit => counter up
             numEquals+=1
-        elif d1 > d2:
-            return False, failedDigitIndex    
-        elif numEquals == 1:
-            oneEqual = True
-            numEquals = 0
-        else:
+        else: # d1 < d2
+            if numEquals == 1: # if last two digits were equal, this might be valid pw
+                oneEqual = True
             numEquals = 0
 
-        d1 = d2
+        d1 = d2 #update ref
         failedDigitIndex+=1
 
-    if numEquals == 1:
+    if numEquals == 1: # last two digits could be equal
         oneEqual = True
 
     return oneEqual, -1
