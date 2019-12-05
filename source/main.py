@@ -53,7 +53,7 @@ def Day2_f():
 #Day2_f()
 
 # day 3
-from day3.day3 import getNearestIntersection
+from day3.day3 import getNearestIntersection, getMinimumSignalDistance
 def Day3_f():
     fileDir = os.path.dirname(__file__)
     relativePath = "../input/day3/input.txt"
@@ -63,8 +63,17 @@ def Day3_f():
     for wire in getFileContentByLine(absFilePath):
         wires.append(wire.split(','))
 
-    point = getNearestIntersection(wires)
+    #part 1
+    # point = getNearestIntersection(wires)
+    # print("Nearest intersection by Manhattan distance is at", point, " having a distance of", point.distance)
 
-    print("Nearest intersection is at", point.toString(), " having a distance of", point.distance)
+    #part 2
+    minDist, intersection = getMinimumSignalDistance(wires)
+    print("Nearest intersection by signal distance is at", intersection, " having a distance of", minDist)
+#Day3_f()
 
-Day3_f()
+from day4.day4 import getNumberOfPasswords
+def Day4_f():
+    pwCount = getNumberOfPasswords()
+    print("Total amount of possible passwords is", pwCount)
+Day4_f()

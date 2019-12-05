@@ -7,10 +7,14 @@ class Point:
         self.y = y
         self.distance = abs(x)+abs(y)
 
-
-
-    def toString(self):
+    def __str__(self):
         return "("+str(self.x)+","+str(self.y)+")"
+    
+    def __eq__(self, other): 
+        return self.x == other.x and self.y == other.y
+
+    def getDistanceTo(self, other):
+        return abs(self.x-other.x)+abs(self.y-other.y)
 
 class LineSegment:
     def __init__(self, p1, p2):
@@ -30,7 +34,7 @@ class LineSegment:
         self.minY = min([p1.y, p2.y])
         self.maxY = max([p1.y, p2.y])
 
-        self.length = maxX-minX + maxY-minY
+        self.length = self.maxX-self.minX + self.maxY-self.minY
 
     def intersects(self, other):
         # parallels don't intersect
@@ -128,22 +132,28 @@ def getNearestIntersection(wires):
 
     intersections = getIntersections(lslist1, lslist2)
     intersections.sort(key=operator.attrgetter('distance'))
-    print("Found", len(intersections), "intersections")
+    
     return intersections[0]
 
-def getIntersectionsAndDistance(lsList1, lsList2):
-    res = []
-    for ls in lsList1:
-        for ls2 in lsList2:
+#part 2
+def getMinimumSignalDistance(wires):
+    lsList1, lsList2 = dissassembleBothWires(wires)
 
+    minDist = math.pow(10,10)
+    intersectionPoint = Point()
+
+    steps1 = 0
+    for ls in lsList1:
+        steps2=0
+        for ls2 in lsList2:
             intersects, intersection = ls.intersects(ls2)
             if intersects == True:
-                res.append(intersection)
-    return res
-
-def getFirstIntersection(wires):
-    lslist1, lslist2 = dissassembleBothWires(wires)
-    intersectionsSortedByList1 = getIntersections(lslist2, lslist1)
-    intersectionsSortedByList2 = getIntersections(lslist1, lslist2)
-
-#part 2
+                testDist = steps1 + intersection.getDistanceTo(ls.p1) + steps2 + intersection.getDistanceTo(ls2.p1)
+                if testDist < minDist:
+                    minDist = testDist
+                    intersectionPoint = intersection
+                # the distance only increases after the first intersection
+                break
+            steps2+=ls2.length
+        steps1+=ls.length
+    return minDist, intersectionPoint
