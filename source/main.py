@@ -72,8 +72,13 @@ def Day3_f():
     print("Nearest intersection by signal distance is at", intersection, " having a distance of", minDist)
 #Day3_f()
 
-from day4.day4 import getNumberOfPasswords
+from day4.day4 import getNumberOfPasswords, checkPassword, checkPassword_part2
 def Day4_f():
-    pwCount = getNumberOfPasswords()
-    print("Total amount of possible passwords is", pwCount)
+    #part 1
+    pwCount = getNumberOfPasswords(checkPassword)
+    print("Total amount of possible passwords for part 1 is", pwCount)
+
+    #part 2
+    pwCount2 = getNumberOfPasswords(checkPassword_part2)
+    print("Total amount of possible passwords for part 2 is", pwCount2)
 Day4_f()
