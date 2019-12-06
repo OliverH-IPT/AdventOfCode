@@ -48,7 +48,7 @@ def Day2_f():
     print("noun = ", noun, ", verb = ", verb, ", result in output = ", executeIntCodeCopy(intcodeProgram, noun, verb))
     print("Result = ", 100 * noun + verb)
 
-# Day2_f()
+#Day2_f()
 
 # day 3
 from days.day3 import getNearestIntersection, getMinimumSignalDistance

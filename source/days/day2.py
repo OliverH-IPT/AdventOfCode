@@ -12,7 +12,6 @@ def checkOpcode(num):
     for mode in reversed(modeList):
         modes[i] = mode
         i+=1
-    
 
     if opcode == 1:
         return 'add', modes
@@ -22,50 +21,22 @@ def checkOpcode(num):
         return 'input', modes
     elif opcode == 4:
         return 'output', modes
+    elif opcode == 5:
+        return 'jumpIfTrue', modes
+    elif opcode == 6:
+        return 'jumpIfFalse', modes
+    elif opcode == 7:
+        return 'lessThan', modes
+    elif opcode == 8:
+        return 'equals', modes
     elif opcode == 99:
         return 'abort', modes
     else:
         return 'error', modes
 
-# dl = getDigitList(num)
-#     opcode = convertDigitListToInt(dl[-2:])
-#     print(opcode)
 
 from days.misc.ErrorHelper import saveExit
-# executes instruction and returns next index
-def executeInstruction(intCodeProgram, index, opcode, modes=[0,0,0]):
-
-    if opcode == 'add' or opcode == 'multiply':
-        if index+3 >= len(intCodeProgram):
-            saveExit("Index out of bounds in add/multiply instruction")
-        # get numbers and indices
-        params = intCodeProgram[index+1:index+4]
-        num1 = params[0] if modes[0] == 1 else intCodeProgram[params[0]]
-        num2 = params[1] if modes[1] == 1 else intCodeProgram[params[1]]
-        targetIndex = params[2]
-        if opcode == 'add':
-            intCodeProgram[targetIndex] = num1 + num2
-        else:
-            intCodeProgram[targetIndex] = num1 * num2
-        return True, 4
-
-    if opcode == 'input':
-        if index+1 >= len(intCodeProgram):
-            saveExit("Index out of bounds in input instruction")
-
-        print("Please Input Data: 1 thank you")
-        targetIndex = intCodeProgram[index+1]
-        intCodeProgram[targetIndex] = 1
-        #int(input())
-        return True, 2
-
-    if opcode == 'output':
-        param = intCodeProgram[index+1]
-        output = param if modes[0]==1 else intCodeProgram[param]
-        print("Beep Bop, diagnostic test output at index", index, "is:", output)
-        return True, 2
-
-    saveExit("Unknown opcode while executing instruction")
+from days.misc.InstructionHelper import executeInstruction
 
 def executeUnchangedIntCode(intCodeProgram):
      # Check first opcode
@@ -75,11 +46,10 @@ def executeUnchangedIntCode(intCodeProgram):
     # loop through code 
     while opcode != 'error' and opcode != 'abort':
         # execute instruction and move index
-        success, indexIncrement = executeInstruction(intCodeProgram, index, opcode, modes)
+        success, index = executeInstruction(intCodeProgram, index, opcode, modes)
         if success != True:
             opcode = 'error'
             break
-        index+=indexIncrement
 
         # check next opcode
         if(len(intCodeProgram) <= index):

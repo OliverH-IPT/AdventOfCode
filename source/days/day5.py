@@ -1,2 +1,1 @@
-from days.misc.DigitHelper import getDigitList
-
+#see day2 and misc/InstructionHelper
