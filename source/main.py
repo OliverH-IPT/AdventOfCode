@@ -1,6 +1,7 @@
 # day 1
 import os, copy
-from days.misc.FileHandler import getFileContentByLine, convertToFloatMap
+from days.misc.FileHandler import getFileContentByLine
+from days.misc.ConversionHelper import convertToFloatMap
 
 from days.day1 import getFuelRequirements
 from days.day1 import calculateModuleFuelRequirement
@@ -23,7 +24,8 @@ def Day1_f():
 #Day1_f()
 
 # day 2
-from days.misc.FileHandler import getFileContentByCommaSeperation, convertToNumberList
+from days.misc.FileHandler import getFileContentByCommaSeperation
+from days.misc.ConversionHelper import convertToNumberList
 from days.day2 import executeIntCode
 from days.day2 import findNounAndVerb, executeIntCodeCopy
 def Day2_f():
