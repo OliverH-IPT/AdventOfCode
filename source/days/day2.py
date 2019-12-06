@@ -1,39 +1,37 @@
 
-#part 1
 from days.misc.DigitHelper import getDigitList, convertDigitListToInt
 def checkOpcode(num):
     dl = getDigitList(num)
-    modes = [0, 0, 0]
-
     opcode = convertDigitListToInt(dl[-2:])
 
+    opcodeString = 'error'
+    if opcode == 1:
+        opcodeString ='add'
+    elif opcode == 2:
+        opcodeString ='multiply'
+    elif opcode == 3:
+        opcodeString ='input'
+    elif opcode == 4:
+        opcodeString ='output'
+    elif opcode == 5:
+        opcodeString ='jumpIfTrue'
+    elif opcode == 6:
+        opcodeString ='jumpIfFalse'
+    elif opcode == 7:
+        opcodeString ='lessThan'
+    elif opcode == 8:
+        opcodeString ='equals'
+    elif opcode == 99:
+        opcodeString ='abort'
+
+    modes = [0, 0, 0]
     modeList = dl[:-2]
     i = 0
     for mode in reversed(modeList):
         modes[i] = mode
         i+=1
 
-    if opcode == 1:
-        return 'add', modes
-    elif opcode == 2:
-        return 'multiply', modes
-    elif opcode == 3:
-        return 'input', modes
-    elif opcode == 4:
-        return 'output', modes
-    elif opcode == 5:
-        return 'jumpIfTrue', modes
-    elif opcode == 6:
-        return 'jumpIfFalse', modes
-    elif opcode == 7:
-        return 'lessThan', modes
-    elif opcode == 8:
-        return 'equals', modes
-    elif opcode == 99:
-        return 'abort', modes
-    else:
-        return 'error', modes
-
+    return opcodeString, modes
 
 from days.misc.ErrorHelper import saveExit
 from days.misc.InstructionHelper import executeInstruction

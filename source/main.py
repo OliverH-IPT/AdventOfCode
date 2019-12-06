@@ -20,7 +20,6 @@ def Day1_f():
     # for some reason i cannot use 'inputMasses' a second time...
     requiredFuel2 = getFuelRequirements(inputMasses, calculateModuleFuelRequirementRecursively)
     print("Required Fuel (recursive):", requiredFuel2)
-
 #Day1_f()
 
 # day 2
@@ -47,7 +46,6 @@ def Day2_f():
     noun, verb = findNounAndVerb(intcodeProgram)
     print("noun = ", noun, ", verb = ", verb, ", result in output = ", executeIntCodeCopy(intcodeProgram, noun, verb))
     print("Result = ", 100 * noun + verb)
-
 #Day2_f()
 
 # day 3
@@ -62,8 +60,8 @@ def Day3_f():
         wires.append(wire.split(','))
 
     #part 1
-    # point = getNearestIntersection(wires)
-    # print("Nearest intersection by Manhattan distance is at", point, " having a distance of", point.distance)
+    point = getNearestIntersection(wires)
+    print("Nearest intersection by Manhattan distance is at", point, " having a distance of", point.distance)
 
     #part 2
     minDist, intersection = getMinimumSignalDistance(wires)

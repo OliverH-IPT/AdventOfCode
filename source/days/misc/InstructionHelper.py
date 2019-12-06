@@ -1,13 +1,13 @@
 
 from days.misc.ErrorHelper import saveExit
 
-def checkParam(intCodeProgram, index):
+def getParam(intCodeProgram, index):
     if index+1 >= len(intCodeProgram):
         saveExit("Index out of bounds in 1 parameters instruction")
     # get numbers and indices
     return intCodeProgram[index+1]
 
-def checkParams(intCodeProgram, index, amnt):
+def getParams(intCodeProgram, index, amnt):
     if index+amnt >= len(intCodeProgram):
         saveExit("Index out of bounds in", amnt, "parameters instruction")
     # get numbers and indices
@@ -17,7 +17,7 @@ def getParamValue(intCodeProgram, param, mode=0):
     return param if mode == 1 else intCodeProgram[param]
 
 def handleAddition(intCodeProgram, modes, index):
-    params = checkParams(intCodeProgram, index, 3)
+    params = getParams(intCodeProgram, index, 3)
     param1 = getParamValue(intCodeProgram, params[0], modes[0])
     param2 = getParamValue(intCodeProgram, params[1], modes[1])
     targetIndex = params[2]
@@ -27,7 +27,7 @@ def handleAddition(intCodeProgram, modes, index):
     return True, index+4
 
 def handleMultiplication(intCodeProgram, modes, index):
-    params = checkParams(intCodeProgram, index, 3)
+    params = getParams(intCodeProgram, index, 3)
     param1 = getParamValue(intCodeProgram, params[0], modes[0])
     param2 = getParamValue(intCodeProgram, params[1], modes[1])
     targetIndex = params[2]
@@ -36,7 +36,7 @@ def handleMultiplication(intCodeProgram, modes, index):
     return True, index+4
 
 def handleInput(intCodeProgram, modes, index):
-    targetIndex = checkParam(intCodeProgram, index)
+    targetIndex = getParam(intCodeProgram, index)
 
     print("Please Input Data:")
     intCodeProgram[targetIndex] = int(input())
@@ -45,13 +45,13 @@ def handleInput(intCodeProgram, modes, index):
     return True, index+2
 
 def handleOutput(intCodeProgram, modes, index):
-    param = checkParam(intCodeProgram, index)
+    param = getParam(intCodeProgram, index)
     output = param if modes[0]==1 else intCodeProgram[param]
     print("Beep Bop, diagnostic test output at index", index, "is:", output)
     return True, index+2
 
 def handleJumpIfTrue(intCodeProgram, modes, index):
-    params = checkParams(intCodeProgram, index, 2)
+    params = getParams(intCodeProgram, index, 2)
     param1 = getParamValue(intCodeProgram, params[0], modes[0])
     param2 = getParamValue(intCodeProgram, params[1], modes[1])
     if param1 != 0:
@@ -59,7 +59,7 @@ def handleJumpIfTrue(intCodeProgram, modes, index):
     return True, index+3
 
 def handleJumpIfFalse(intCodeProgram, modes, index):
-    params = checkParams(intCodeProgram, index, 2)
+    params = getParams(intCodeProgram, index, 2)
     param1 = getParamValue(intCodeProgram, params[0], modes[0])
     param2 = getParamValue(intCodeProgram, params[1], modes[1])
     if param1 == 0:
@@ -67,7 +67,7 @@ def handleJumpIfFalse(intCodeProgram, modes, index):
     return True, index+3
 
 def handleLessThan(intCodeProgram, modes, index):
-    params = checkParams(intCodeProgram, index, 3)
+    params = getParams(intCodeProgram, index, 3)
     param1 = getParamValue(intCodeProgram, params[0], modes[0])
     param2 = getParamValue(intCodeProgram, params[1], modes[1])
     targetIndex = params[2]
@@ -78,7 +78,7 @@ def handleLessThan(intCodeProgram, modes, index):
     return True, index+4
 
 def handleEquals(intCodeProgram, modes, index):
-    params = checkParams(intCodeProgram, index, 3)
+    params = getParams(intCodeProgram, index, 3)
     param1 = getParamValue(intCodeProgram, params[0], modes[0])
     param2 = getParamValue(intCodeProgram, params[1], modes[1])
     targetIndex = params[2]
