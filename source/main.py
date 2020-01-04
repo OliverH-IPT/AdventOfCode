@@ -1,17 +1,18 @@
-# day 1
 import os, copy
+def getAbsPath(path):
+    fileDir = os.path.dirname(__file__)
+    return os.path.join(fileDir, path)
+
+# day 1
 from days.misc.FileHandler import getFileContentByLine
 from days.misc.ConversionHelper import convertToFloatMap
 
 from days.day1 import getFuelRequirements
 from days.day1 import calculateModuleFuelRequirement
 from days.day1 import calculateModuleFuelRequirementRecursively
-
 def Day1_f():
     # part 1
-    fileDir = os.path.dirname(__file__)
-    relativePath = "../input/day1/input.txt"
-    absFilePath = os.path.join(fileDir, relativePath)
+    absFilePath = getAbsPath("../input/day1/input.txt")
     inputMasses = convertToFloatMap(getFileContentByLine(absFilePath))
 
     requiredFuel = getFuelRequirements(copy.deepcopy(inputMasses), calculateModuleFuelRequirement)
@@ -29,9 +30,7 @@ from days.misc.ConversionHelper import convertToNumberList
 from days.day2 import executeIntCode
 from days.day2 import findNounAndVerb, executeIntCodeCopy
 def Day2_f():
-    fileDir = os.path.dirname(__file__)
-    relativePath = "../input/day2/input.txt"
-    absFilePath = os.path.join(fileDir, relativePath)
+    absFilePath = getAbsPath("../input/day2/input.txt")
     intcodeProgram = convertToNumberList(getFileContentByCommaSeperation(absFilePath))
     
     # part 1
@@ -53,9 +52,7 @@ def Day2_f():
 # day 3
 from days.day3 import getNearestIntersection, getMinimumSignalDistance
 def Day3_f():
-    fileDir = os.path.dirname(__file__)
-    relativePath = "../input/day3/input.txt"
-    absFilePath = os.path.join(fileDir, relativePath)
+    absFilePath = getAbsPath("../input/day3/input.txt")
 
     wires = []
     for wire in getFileContentByLine(absFilePath):
@@ -83,12 +80,9 @@ def Day4_f():
 
 from days.day2 import executeUnchangedIntCode
 def Day5_f():
-    fileDir = os.path.dirname(__file__)
-    relativePath = "../input/day5/input.txt"
-    absFilePath = os.path.join(fileDir, relativePath)
+    absFilePath = getAbsPath("../input/day5/input.txt")
     intcodeProgram = convertToNumberList(getFileContentByCommaSeperation(absFilePath))
     # part 1
-    
     print("-------- Part 1 -----------")
     intcodeProgramCopy = copy.deepcopy(intcodeProgram)
     if executeUnchangedIntCode(intcodeProgramCopy) == True:
@@ -99,4 +93,21 @@ def Day5_f():
     #part 2
     
     #print("Total amount of possible passwords for part 2 is", pwCount2)
-Day5_f()
+#Day5_f()
+
+
+from days.misc.ConversionHelper import convertToOrbits
+from days.day6 import OrbitTree, setupOrbitTree, getMinimumOrbitalTransfers
+def Day6_f():
+    absFilePath = getAbsPath("../input/day6/input.txt")
+    orbitPairs = convertToOrbits(getFileContentByLine(absFilePath))
+
+    # part 1
+    root = setupOrbitTree(orbitPairs)
+    orbitCount = root.findDepthTraversal(0)
+    print("Total number of direct and indirect orbits is", orbitCount)
+    
+    # part 2
+    numberOfTransfers = getMinimumOrbitalTransfers(root)
+    print("Total number of transfers from me to santa is", numberOfTransfers)
+Day6_f()
